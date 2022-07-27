@@ -1,12 +1,9 @@
 package com.wasystem.projetoreactspring.services;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
+import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
 
 import com.wasystem.projetoreactspring.entities.Login;
@@ -15,18 +12,38 @@ import com.wasystem.projetoreactspring.repositories.LoginRepository;
 @Service
 public class LoginService {
 
-	@Autowired
-	private LoginRepository repository;
+	final LoginRepository loginRepository;
 	
-	public Page<Login> findLogin(String userPass, String userName, Pageable pageable) {
+	public LoginService(LoginRepository loginRepository) {
+		this.loginRepository = loginRepository;
+	}
+	
+	//Salva no banco
+	@Transactional
+	public Login save(Login login) {
+		return loginRepository.save(login);
+	}
+	
+	public boolean existsByUserName(String userName) {
+		return loginRepository.existsByUserName(userName);
+	}
+	
+	public boolean existsByEmailUser(String userEmail) {
+		return loginRepository.existsByEmailUser(userEmail);
+	}
+
+	public List<Login> findAll(){
+		return loginRepository.findAll();
 		
-		LocalDate today = LocalDate.ofInstant(Instant.now(), ZoneId.systemDefault());
-		
-		String user = userName.equals("") ? "" : userName.toString();
-		String passW = userPass.equals("") ? "" : userPass.toString();
-		
-		
-		return repository.findLogin(passW, user, pageable);
+	}
+
+	public java.util.Optional<Login> findByUserName(String userName) {
+		return loginRepository.findByUserName(userName);
+	}
+
+	@Transactional
+	public void delete(Login login) {
+		loginRepository.delete(login);		
 	}
 	
 }
