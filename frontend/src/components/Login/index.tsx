@@ -2,6 +2,12 @@ import { useState } from 'react';
 import logo from   '../../assets/img/logo.svg'
 import "./styles.css"
 
+function handleClick(id: number){
+  axios(`${BASE_URL}/sales`).then(response => {
+          toast.info("Login efetuado com sucesso!!!")
+      })
+}
+
 function Login() {
 
   const [email, setEmail] = useState("");
@@ -37,7 +43,7 @@ function Login() {
             </div>
 
             <div className="container-login-form-btn">
-              <button className="login-form-btn">Login</button>
+              <button className="login-form-btn" onClick={() => handleClick()}>Login</button>
             </div>
 
             <div className="text-center">
