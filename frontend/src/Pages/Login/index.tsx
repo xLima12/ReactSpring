@@ -1,9 +1,11 @@
+import axios from 'axios';
 import { useState } from 'react';
-import logo from   '../../assets/img/logo.svg'
-import "./styles.css"
+import { toast } from 'react-toastify';
+import { BASE_URL } from '../../utils/request';
+import "./styles.css";
 
-function handleClick(id: number){
-  axios(`${BASE_URL}/sales`).then(response => {
+function handleClick(){
+  axios(`${BASE_URL}/login`).then(response => {
           toast.info("Login efetuado com sucesso!!!")
       })
 }
@@ -22,7 +24,7 @@ function Login() {
             <span className="login-form-title">Bem Vindo!</span>
 
             <span className="login-form-title">
-              <img src={logo} alt="Login" />
+              <img src={"../../assets/img/logo.svg"} alt="Login" />
             </span>
 
             <div className="wrap-input">
